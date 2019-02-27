@@ -1,7 +1,8 @@
 import { createServer, Server } from 'http';
 import * as express from 'express';
 
-export class MessageServer {
+class MessageServer {
+  
   private app: express.Application;
   private server: Server;
 
@@ -24,3 +25,6 @@ export class MessageServer {
     });
   }
 }
+
+let app = new MessageServer().getApp();
+export { app }
