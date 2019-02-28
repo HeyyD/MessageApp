@@ -4,7 +4,7 @@ import SocketIOClient from 'socket.io-client';
 export default class MessageManager {
 
   private static instance: MessageManager;
-  private socket: any;
+  private socket: SocketIOClient.Socket;
 
   private constructor() {
     console.ignoredYellowBox = ['Remote debugger'];
