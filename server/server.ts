@@ -26,10 +26,10 @@ class MessageServer {
   private startServer(): void {
     this.server.listen(this.port, () => {
       console.log(`The server is running in ${this.address}:${this.port}`);
+    });
 
-      this.websocket.on('connection', (socket) => {
-        console.log(`Client connected: ${socket.id}`);
-      });
+    this.websocket.on('connect', (socket) => {
+      console.log(`Client connected: ${socket.id}`);
     });
   }
 }
