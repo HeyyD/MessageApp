@@ -1,10 +1,30 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, TextInput, View, Button } from 'react-native';
+import MessageManager from '../services/MessageManager';
 
-export default class ChatInput extends Component {
+interface Props {}
+interface State { 
+  message: string
+}
+
+export default class ChatInput extends Component<Props, State> {
+
+  private messageManager: MessageManager;
+
+  constructor(props: Props) {
+    super(props);
+    this.messageManager = MessageManager.getInstance();
+    this.state = {
+      message: ''
+    }
+  }
+
   render() {
     return (
-      <Text>ChatInput Component</Text>
+      <View>
+        <TextInput style={{backgroundColor: '#ebebeb'}} onChangeText={(text: string) => this.setState({message: text})} />
+        <Button title='send' onPress={ () =>  this.messageManager.sendMessage({text: this.state.message})}/>
+      </View>
     )
   }
 }
