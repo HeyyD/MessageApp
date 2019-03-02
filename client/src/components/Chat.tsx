@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, FlatList } from 'react-native';
 import MessageManager from '../services/MessageManager';
 import { Message } from '../models/Message';
 
@@ -32,7 +32,11 @@ export default class Chat extends Component<Props, State> {
 
   render() {
     return (
-      <Text>{ this.state.messages.map(m => m.text) }</Text>
+      <FlatList
+        data={ this.state.messages }
+        keyExtractor={ (item: Message, index: number) => index.toString() }
+        renderItem={ ({item}) => <Text>{item.text}</Text>}
+      />
     );
   }
 }
