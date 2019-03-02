@@ -1,6 +1,7 @@
 import { createServer, Server } from 'http';
 import * as express from 'express';
 import * as socketio from 'socket.io';
+import { Message } from './models/message';
 
 class MessageServer {
   
@@ -30,6 +31,10 @@ class MessageServer {
 
     this.websocket.on('connect', (socket) => {
       console.log(`Client connected: ${socket.id}`);
+
+      socket.on('message', (message: Message) => {
+        this.websocket.emit('message', message);
+      })
     });
   }
 }
