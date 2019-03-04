@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import { Text, FlatList, StyleSheet, View } from 'react-native';
+import { FlatList } from 'react-native';
 import MessageManager from '../services/MessageManager';
+import ChatMessage from './ChatMessage';
 import { Message } from '../models/Message';
-
-let styles = StyleSheet.create({
-  messageItem: {
-    fontSize: 20
-  }
-});
 
 interface Props {}
 interface State {
@@ -42,7 +37,7 @@ export default class Chat extends Component<Props, State> {
         inverted={ true }
         data={ this.state.messages.reverse() }
         keyExtractor={ (item: Message, index: number) => index.toString() }
-        renderItem={ ({item}) => <Text style={styles.messageItem}>{item.text}</Text>}
+        renderItem={ ({item}) => <ChatMessage text={ item.text } />}
       />
     );
   }
