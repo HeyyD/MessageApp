@@ -1,6 +1,21 @@
 import React, { Component } from 'react';
-import { Text, TextInput, View, Button } from 'react-native';
+import { TextInput, View, Button, StyleSheet } from 'react-native';
 import MessageManager from '../services/MessageManager';
+
+let styles = StyleSheet.create({
+  container: {
+    flexShrink: 1,
+    flexDirection: 'row'
+  },
+  input: {
+    flex: 1,
+    backgroundColor: '#eee',
+    borderRadius: 20,
+    margin: 10,
+    paddingLeft: 10,
+    paddingRight: 10
+  }
+});
 
 interface Props {}
 interface State { 
@@ -29,13 +44,13 @@ export default class ChatInput extends Component<Props, State> {
 
   render() {
     return (
-      <View>
+      <View style={ styles.container }>
         <TextInput 
-          style={{backgroundColor: '#ebebeb'}}
+          style={styles.input}
           onChangeText={(text: string) => this.setState({message: text})}
           value={ this.state.message }
         />
-        <Button title='send' onPress={ () => this.sendMessage()}/>
+        <Button disabled={ !(this.state.message.length > 0) } title='send' onPress={ () => this.sendMessage()}/>
       </View>
     )
   }
