@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { TextInput, View, Button, StyleSheet } from 'react-native';
+import { TextInput, View, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import MessageManager from '../services/MessageManager';
 
 let styles = StyleSheet.create({
@@ -14,6 +15,10 @@ let styles = StyleSheet.create({
     margin: 10,
     paddingLeft: 10,
     paddingRight: 10
+  },
+  button: {
+    marginRight: 5,
+    justifyContent: 'center'
   }
 });
 
@@ -50,7 +55,13 @@ export default class ChatInput extends Component<Props, State> {
           onChangeText={(text: string) => this.setState({message: text})}
           value={ this.state.message }
         />
-        <Button disabled={ !(this.state.message.length > 0) } title='send' onPress={ () => this.sendMessage()}/>
+        <TouchableOpacity
+          style={styles.button}
+          disabled={ !(this.state.message.length > 0) }
+          onPress={ () => this.sendMessage()}
+        >
+          <Icon name='arrow-right' size={40} color={ !(this.state.message.length > 0) ? '#aaa' : '#eb6123' }/>
+        </TouchableOpacity>
       </View>
     )
   }
