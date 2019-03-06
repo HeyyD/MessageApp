@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput, View, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { TextInput, View, StyleSheet, TouchableOpacity, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MessageManager from '../services/MessageManager';
 
@@ -42,9 +42,15 @@ export default class ChatInput extends Component<Props, State> {
     }
   }
 
-  sendMessage() {
-    this.messageManager.sendMessage({text: this.state.message});
-    this.setState({message: ''});
+  sendMessage(): void {
+    if(this.state.message.length > 0) {
+      this.messageManager.sendMessage({
+        user: this.messageManager.getUser(),
+        text: this.state.message
+      });
+      
+      this.setState({message: ''});
+    }
   }
 
   render() {
@@ -54,6 +60,8 @@ export default class ChatInput extends Component<Props, State> {
           style={styles.input}
           onChangeText={(text: string) => this.setState({message: text})}
           value={ this.state.message }
+          returnKeyType='send'
+          onSubmitEditing={ () => this.sendMessage() }
         />
         <TouchableOpacity
           style={styles.button}
