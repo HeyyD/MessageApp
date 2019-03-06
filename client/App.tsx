@@ -7,6 +7,8 @@ const MainNavigation = createStackNavigator({
   LoadingScreen: { screen: LoadingScreen },
   Chat: { screen: ChatScreen },
   Register: { screen: Register }
+}, {
+  headerMode: 'none'
 });
 
 const App = createAppContainer(MainNavigation);
