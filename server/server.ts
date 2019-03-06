@@ -9,7 +9,7 @@ class MessageServer {
   private server: Server;
   private websocket: socketio.Server;
 
-  private address = '192.168.1.31'
+  private address = '192.168.1.31';
   private port = 8080;
 
   constructor() {
@@ -34,10 +34,10 @@ class MessageServer {
 
       socket.on('message', (message: Message) => {
         this.websocket.emit('message', message);
-      })
+      });
     });
   }
 }
 
-let app = new MessageServer().getApp();
-export { app }
+const app = new MessageServer().getApp();
+export { app };
