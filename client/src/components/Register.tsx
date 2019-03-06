@@ -29,7 +29,20 @@ let styles = StyleSheet.create({
   }
 });
 
-export default class Register extends Component {
+interface Props {}
+interface State {
+  username: string
+}
+
+export default class Register extends Component<Props, State> {
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      username: ''
+    };
+  }
+
   render() {
     return(
       <View style={ styles.container }>
@@ -38,9 +51,16 @@ export default class Register extends Component {
         <TextInput
           style={ styles.input }
           placeholder='Username'
+          value={ this.state.username }
+          onChangeText={ (text: string) => this.setState({username: text}) }
         />
         <View style={ styles.button }>
-          <Button title='Register' onPress={ () => console.log('Button pressed') } color='#eb6123'/>
+          <Button 
+            title='Register'
+            color='#eb6123'
+            disabled={ !(this.state.username.length > 0) }
+            onPress={ () => console.log(this.state.username) }
+          />
         </View>
       </View>
     );
