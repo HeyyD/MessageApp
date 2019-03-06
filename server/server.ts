@@ -4,12 +4,14 @@ import * as socketio from 'socket.io';
 import * as mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 import { Message } from './src/models/message';
+import { Users } from './src/routes/users';
 
 class MessageServer {
   
   private app: express.Application;
   private server: Server;
   private websocket: socketio.Server;
+  private userRoutes: Users;
 
   private address = '192.168.1.31';
   private port = 8080;
@@ -18,6 +20,7 @@ class MessageServer {
     this.app = express();
     this.server = createServer(this.app);
     this.websocket = socketio(this.server);
+    this.userRoutes = new Users(this.app);
     dotenv.config();
 
     this.startServer();
