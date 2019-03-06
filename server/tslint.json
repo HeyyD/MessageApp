@@ -8,6 +8,7 @@
     "no-console": false,
     "member-access": false,
     "semicolon": true,
+    "object-literal-sort-keys": false,
     "interface-name": [true, "never-prefix"],
     "no-implicit-dependencies": [true, "dev"]
   }
