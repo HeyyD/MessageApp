@@ -6,7 +6,15 @@ import * as dotenv from 'dotenv';
 import { Message } from './models/message';
 
 class MessageServer {
-  
+
+  static getInstance(): MessageServer {
+    if (MessageServer.instance === null) {
+      MessageServer.instance = new MessageServer();
+    }
+    return MessageServer.instance;
+  }
+
+  private static instance: MessageServer = null;
   private app: express.Application;
   private server: Server;
   private websocket: socketio.Server;
@@ -14,7 +22,7 @@ class MessageServer {
   private address = '192.168.1.31';
   private port = 8080;
 
-  constructor() {
+  private constructor() {
     this.app = express();
     this.server = createServer(this.app);
     this.websocket = socketio(this.server);
@@ -53,5 +61,5 @@ class MessageServer {
   }
 }
 
-const app = new MessageServer().getApp();
+const app = MessageServer.getInstance().getApp();
 export { app };
