@@ -43,7 +43,11 @@ export default class ChatInput extends Component<Props, State> {
   }
 
   sendMessage() {
-    this.messageManager.sendMessage({text: this.state.message});
+    this.messageManager.sendMessage({
+      user: this.messageManager.getUser(),
+      text: this.state.message
+    });
+    
     this.setState({message: ''});
   }
 
