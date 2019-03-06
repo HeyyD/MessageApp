@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ActivityIndicator, StyleSheet, AsyncStorage } from 'react-native';
 import { NavigationScreenProps, NavigationScreenProp } from 'react-navigation';
+import MessageManager from '../services/MessageManager';
 
 let styles = StyleSheet.create({
   container: {
@@ -27,6 +28,7 @@ export default class LoadingScreen extends Component<Props> {
       const user = await AsyncStorage.getItem('USER');
       if (user !== null) {
         console.log(`User found ${user}`);
+        MessageManager.getInstance().setUser(user);
         setTimeout(() => {
           this.props.navigation.replace('Chat');
         }, 1000);

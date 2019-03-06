@@ -7,6 +7,7 @@ export default class MessageManager {
 
   private static instance: MessageManager;
   private socket: SocketIOClient.Socket;
+  private user?: string;
 
   private constructor() {
     console.ignoredYellowBox = ['Remote debugger'];
@@ -25,6 +26,16 @@ export default class MessageManager {
     return new Observable<Message>(observer => {
       this.socket.on('message', (data: Message) => observer.next(data));
     });
+  }
+
+  setUser(user: string): void {
+    this.user = user;
+  }
+
+  getUser(): string {
+    // There really shouldn't be any moment when we try to retreve the user
+    // and it isn't initialized.
+    return this.user!;
   }
 
   static getInstance(): MessageManager {
