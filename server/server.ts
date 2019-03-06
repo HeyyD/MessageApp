@@ -1,6 +1,8 @@
 import { createServer, Server } from 'http';
 import * as express from 'express';
 import * as socketio from 'socket.io';
+import * as mongoose from 'mongoose';
+import * as dotenv from 'dotenv';
 import { Message } from './models/message';
 
 class MessageServer {
@@ -16,6 +18,7 @@ class MessageServer {
     this.app = express();
     this.server = createServer(this.app);
     this.websocket = socketio(this.server);
+    dotenv.config();
 
     this.startServer();
   }
@@ -25,6 +28,13 @@ class MessageServer {
   }
 
   private startServer(): void {
+
+    mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true }).then(() => {
+      console.log('Connected to database!');
+    }).catch((error: any) => {
+      console.log(error);
+    });
+
     this.server.listen(this.port, () => {
       console.log(`The server is running in ${this.address}:${this.port}`);
     });
@@ -35,6 +45,10 @@ class MessageServer {
       socket.on('message', (message: Message) => {
         this.websocket.emit('message', message);
       });
+    });
+
+    this.server.on('close', () => {
+      mongoose.connection.close();
     });
   }
 }
