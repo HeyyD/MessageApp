@@ -1,22 +1,15 @@
-import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
-import Chat from './src/components/Chat';
-import ChatInput from './src/components/ChatInput';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+import ChatScreen from './src/components/ChatScreen';
+import Register from './src/components/Register';
+import LoadingScreen from './src/components/LoadingScreen';
 
-let styles = StyleSheet.create({
-  chatContainer: {
-    flex: 1,
-    justifyContent: 'flex-end'
-  }
+const MainNavigation = createStackNavigator({
+  LoadingScreen: { screen: LoadingScreen },
+  Chat: { screen: ChatScreen },
+  Register: { screen: Register }
+}, {
+  headerMode: 'none'
 });
 
-export default class App extends Component {
-  render() {
-    return (
-      <View style={styles.chatContainer}>
-        <Chat/>
-        <ChatInput/>
-      </View>
-    );
-  }
-}
+const App = createAppContainer(MainNavigation);
+export default App;
