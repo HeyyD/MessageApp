@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, StyleSheet, Button } from 'react-native';
+import { Text, View, TextInput, StyleSheet, Button, AsyncStorage } from 'react-native';
+import { NavigationScreenProps } from 'react-navigation';
 
 let styles = StyleSheet.create({
   container: {
@@ -29,7 +30,7 @@ let styles = StyleSheet.create({
   }
 });
 
-interface Props {}
+interface Props extends NavigationScreenProps {}
 interface State {
   username: string
 }
@@ -38,9 +39,19 @@ export default class Register extends Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
+    this.register = this.register.bind(this);
     this.state = {
       username: ''
     };
+  }
+
+  async register(): Promise<void> {
+    try {
+      await AsyncStorage.setItem('USER', this.state.username);
+      this.props.navigation.replace('LoadingScreen');
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   render() {
@@ -59,7 +70,7 @@ export default class Register extends Component<Props, State> {
             title='Register'
             color='#eb6123'
             disabled={ !(this.state.username.length > 0) }
-            onPress={ () => console.log(this.state.username) }
+            onPress={ () => this.register() }
           />
         </View>
       </View>

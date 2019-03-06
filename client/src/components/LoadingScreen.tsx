@@ -26,13 +26,15 @@ export default class LoadingScreen extends Component<Props> {
     try {
       const user = await AsyncStorage.getItem('USER');
       if (user !== null) {
-        console.log('user found');
+        console.log(`User found ${user}`);
+        setTimeout(() => {
+          this.props.navigation.replace('Chat');
+        }, 1000);
       } else {
         console.log('user not found')
-        // this.props.navigation.navigate('Register');
         setTimeout(() => {
           this.props.navigation.replace('Register');
-        }, 2000);
+        }, 1000);
       }
     } catch (error) {
       console.log(error);
