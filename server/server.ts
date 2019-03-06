@@ -5,7 +5,7 @@ import * as mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 import { Message } from './src/models/message';
 
-class MessageServer {
+export class MessageServer {
 
   static getInstance(): MessageServer {
     if (MessageServer.instance === null) {
