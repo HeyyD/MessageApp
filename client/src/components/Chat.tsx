@@ -37,7 +37,7 @@ export default class Chat extends Component<Props, State> {
         inverted={ true }
         data={ this.state.messages.reverse() }
         keyExtractor={ (item: Message, index: number) => index.toString() }
-        renderItem={ ({item}) => <ChatMessage text={ item.text } />}
+        renderItem={ ({item}) => <ChatMessage message={ item } />}
       />
     );
   }
