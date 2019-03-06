@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
+    "tslint": "./node_modules/.bin/tslint",
     "start": "tsc && node build/server.js"
   },
   "author": "Heidi Hati",
@@ -17,6 +18,8 @@
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
+    "tslint": "^5.13.1",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.3.3333"
   }
 }
