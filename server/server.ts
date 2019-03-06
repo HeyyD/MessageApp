@@ -3,7 +3,7 @@ import * as express from 'express';
 import * as socketio from 'socket.io';
 import * as mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
-import { Message } from './models/message';
+import { Message } from './src/models/message';
 
 class MessageServer {
 
