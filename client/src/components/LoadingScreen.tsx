@@ -3,6 +3,7 @@ import { Text, View, ActivityIndicator, StyleSheet, AsyncStorage } from 'react-n
 import { NavigationScreenProps, NavigationScreenProp } from 'react-navigation';
 import DeviceInfo from 'react-native-device-info';
 import MessageManager from '../services/MessageManager';
+import { User } from '../models/User';
 
 let styles = StyleSheet.create({
   container: {
@@ -31,8 +32,9 @@ export default class LoadingScreen extends Component<Props> {
 
     fetch(this.api + deviceID).then(res => {
       if (res.status === 200) {
-        res.json().then((user) => {
-          console.log(user);
+        res.json().then((user: User) => {
+          this.initMessageManager(user);
+          this.props.navigation.replace('Chat');          
         });
       } else if (res.status === 404) {
         this.props.navigation.replace('Register');
@@ -47,5 +49,10 @@ export default class LoadingScreen extends Component<Props> {
         <ActivityIndicator size='large' color='#eb6123' />
       </View>
     );
+  }
+
+  initMessageManager(user: User): void {
+    const manager = MessageManager.getInstance();
+    manager.setUser(user);
   }
 }
