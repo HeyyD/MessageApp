@@ -2,12 +2,13 @@ import { YellowBox } from 'react-native';
 import SocketIOClient from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { Message } from '../models/Message';
+import { User } from '../models/User';
 
 export default class MessageManager {
 
   private static instance: MessageManager;
   private socket: SocketIOClient.Socket;
-  private user?: string;
+  private user?: User;
 
   private constructor() {
     console.ignoredYellowBox = ['Remote debugger'];
@@ -28,11 +29,11 @@ export default class MessageManager {
     });
   }
 
-  setUser(user: string): void {
+  setUser(user: User): void {
     this.user = user;
   }
 
-  getUser(): string {
+  getUser(): User {
     // There really shouldn't be any moment when we try to retreve the user
     // and it isn't initialized.
     return this.user!;

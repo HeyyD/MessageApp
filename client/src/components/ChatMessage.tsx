@@ -44,7 +44,7 @@ export default class ChatMessage extends Component<Props> {
     return (
       <View style={ [styles.container, (user === sender) ? styles.ownMessage : null] }>
         <Text style={ styles.text }>{ this.props.message.text }</Text>
-        <Text style={[styles.username, (user === sender) ? {textAlign: 'right'} : null ]}>{ this.props.message.user }</Text>
+        <Text style={[styles.username, (user === sender) ? {textAlign: 'right'} : null ]}>{ this.props.message.user.username }</Text>
       </View>
     );
   }
