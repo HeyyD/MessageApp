@@ -19,12 +19,8 @@ export class Users {
     });
 
     this.router.post('/', (req: express.Request, res: express.Response) => {
-      // const data = req.body as User;
-      const user = {
-        username: 'TestUser',
-        deviceID: 'id123'
-      };
-
+      const user = req.body as User;
+      
       const userModel = new UserModel(user);
       userModel.save().then(() => {
         res.status(200).send('User created');
