@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import { User } from '../models/user';
+import { User, UserModel } from '../models/user';
 
 export class Users {
   private router = express.Router();
@@ -12,8 +12,18 @@ export class Users {
     });
 
     this.router.post('/', (req: express.Request, res: express.Response) => {
-      const data = req.body as User;
-      res.send(data);
+      // const data = req.body as User;
+      const user = {
+        username: 'TestUser',
+        deviceID: 'id123'
+      };
+
+      const userModel = new UserModel(user);
+      userModel.save().then(() => {
+        res.status(200).send('User created');
+      }).catch((error) => {
+        res.send(500).send(error);
+      });
     });
 
     app.use(bodyParser.json());
