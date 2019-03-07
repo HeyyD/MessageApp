@@ -10,6 +10,7 @@
     "semicolon": true,
     "object-literal-sort-keys": false,
     "interface-name": [true, "never-prefix"],
-    "no-implicit-dependencies": [true, "dev"]
+    "no-implicit-dependencies": [true, "dev"],
+    "no-shadowed-variable": true
   }
 }
