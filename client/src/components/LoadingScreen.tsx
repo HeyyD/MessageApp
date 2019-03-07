@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ActivityIndicator, StyleSheet, AsyncStorage } from 'react-native';
 import { NavigationScreenProps, NavigationScreenProp } from 'react-navigation';
+import * as DeviceInfo from 'react-native-device-info';
 import MessageManager from '../services/MessageManager';
 
 let styles = StyleSheet.create({
@@ -19,14 +20,17 @@ interface Props extends NavigationScreenProps {}
 
 export default class LoadingScreen extends Component<Props> {
 
-  private api: string = 'http://192.168.1.31:8080/api/users';
+  private api: string = 'http://192.168.1.31:8080/api/users/';
 
   componentDidMount() {
     this.init();
   }
 
-  async init(): Promise<void> {
-    fetch(this.api).then(res => console.log(res));
+  init(): void {
+    let deviceID = DeviceInfo.default.getUniqueID();
+
+    fetch(this.api + deviceID).then(res => console.log(res));
+    /*
     try {
       const user = await AsyncStorage.getItem('USER');
       if (user !== null) {
@@ -44,6 +48,7 @@ export default class LoadingScreen extends Component<Props> {
     } catch (error) {
       console.log(error);
     }
+    */
   }
 
   render() {

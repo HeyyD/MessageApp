@@ -6,8 +6,9 @@ export class Users {
   private router = express.Router();
 
   constructor(app: express.Application) {
-    this.router.get('/', (req: express.Request, res: express.Response) => {
-      res.send({hello: 'Hello World'});
+    this.router.get('/:id', (req: express.Request, res: express.Response) => {
+      console.log(req.params.id);
+      res.status(200).send(req.params.id);
     });
 
     this.router.post('/', (req: express.Request, res: express.Response) => {
