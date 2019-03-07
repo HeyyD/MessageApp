@@ -38,8 +38,11 @@ export default class ChatMessage extends Component<Props> {
     this.messageManager = MessageManager.getInstance();
   }
   render() {
-    const user = this.messageManager.getUser();
-    const sender = this.props.message.user;
+    const user = JSON.stringify(this.messageManager.getUser());
+    const sender = JSON.stringify(this.props.message.user);
+
+    console.log(user);
+    console.log(sender);
 
     return (
       <View style={ [styles.container, (user === sender) ? styles.ownMessage : null] }>
