@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ActivityIndicator, StyleSheet, AsyncStorage } from 'react-native';
 import { NavigationScreenProps, NavigationScreenProp } from 'react-navigation';
-import * as DeviceInfo from 'react-native-device-info';
+import DeviceInfo from 'react-native-device-info';
 import MessageManager from '../services/MessageManager';
 
 let styles = StyleSheet.create({
@@ -27,7 +27,7 @@ export default class LoadingScreen extends Component<Props> {
   }
 
   init(): void {
-    let deviceID = DeviceInfo.default.getUniqueID();
+    let deviceID = DeviceInfo.getUniqueID();
 
     fetch(this.api + deviceID).then(res => {
       if (res.status === 200) {
