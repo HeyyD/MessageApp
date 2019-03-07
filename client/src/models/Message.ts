@@ -1,4 +1,6 @@
+import { User } from "./User";
+
 export interface Message {
-  user: string;
+  user: User;
   text: string;
 }
