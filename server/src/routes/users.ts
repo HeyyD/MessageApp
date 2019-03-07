@@ -7,8 +7,15 @@ export class Users {
 
   constructor(app: express.Application) {
     this.router.get('/:id', (req: express.Request, res: express.Response) => {
-      console.log(req.params.id);
-      res.status(200).send(req.params.id);
+      UserModel.findOne({ deviceID: req.params.id }, (error: any, user: User) => {
+        if (error) { console.log(error); }
+
+        if (!user) {
+          res.sendStatus(404);
+        } else {
+          res.status(200).send(user);
+        }
+      });
     });
 
     this.router.post('/', (req: express.Request, res: express.Response) => {
