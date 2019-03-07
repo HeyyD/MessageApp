@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, TextInput, StyleSheet, Button, AsyncStorage } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
+import DeviceInfo from 'react-native-device-info';
 
 let styles = StyleSheet.create({
   container: {
@@ -37,6 +38,8 @@ interface State {
 
 export default class Register extends Component<Props, State> {
 
+  private api: string = 'http://192.168.1.31:8080/api/users/';
+
   constructor(props: Props) {
     super(props);
     this.register = this.register.bind(this);
@@ -45,13 +48,22 @@ export default class Register extends Component<Props, State> {
     };
   }
 
-  async register(): Promise<void> {
-    try {
-      await AsyncStorage.setItem('USER', this.state.username);
-      this.props.navigation.replace('LoadingScreen');
-    } catch (error) {
-      console.log(error)
-    }
+  register(): void {
+    const deviceID = DeviceInfo.getUniqueID();
+    fetch(this.api, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        'username': this.state.username,
+        'deviceID': deviceID  
+      })
+    }).then(res => {
+      if (res.status === 200) {
+        this.props.navigation.replace('LoadingScreen');
+      }
+    });
   }
 
   render() {
