@@ -19,11 +19,14 @@ interface Props extends NavigationScreenProps {}
 
 export default class LoadingScreen extends Component<Props> {
 
+  private api: string = 'http://192.168.1.31:8080/api/users';
+
   componentDidMount() {
     this.init();
   }
 
   async init(): Promise<void> {
+    fetch(this.api).then(res => console.log(res));
     try {
       const user = await AsyncStorage.getItem('USER');
       if (user !== null) {
