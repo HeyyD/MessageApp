@@ -29,7 +29,15 @@ export default class LoadingScreen extends Component<Props> {
   init(): void {
     let deviceID = DeviceInfo.default.getUniqueID();
 
-    fetch(this.api + deviceID).then(res => console.log(res));
+    fetch(this.api + 'id123').then(res => {
+      if (res.status === 200) {
+        res.json().then((user) => {
+          console.log(user);
+        })
+      } else if (res.status === 404) {
+        this.props.navigation.replace('Register');
+      }
+    });
     /*
     try {
       const user = await AsyncStorage.getItem('USER');
