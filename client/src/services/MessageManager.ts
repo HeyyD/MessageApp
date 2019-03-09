@@ -6,14 +6,24 @@ import { User } from '../models/User';
 
 export default class MessageManager {
 
+  static getInstance(): MessageManager {
+    if (!MessageManager.instance) {
+      MessageManager.instance = new MessageManager();
+    }
+    return MessageManager.instance;
+  }
+
   private static instance: MessageManager;
   private socket: SocketIOClient.Socket;
   private user?: User;
 
   private constructor() {
+    // tslint:disable-next-line: no-console
     console.ignoredYellowBox = ['Remote debugger'];
     YellowBox.ignoreWarnings([
-      'Unrecognized WebSocket connection option(s) `agent`, `perMessageDeflate`, `pfx`, `key`, `passphrase`, `cert`, `ca`, `ciphers`, `rejectUnauthorized`. Did you mean to put these under `headers`?'
+      'Unrecognized WebSocket connection option(s) `agent`, `perMessageDeflate`, `pfx`,'
+      + '`key`, `passphrase`, `cert`, `ca`, `ciphers`, `rejectUnauthorized`. Did'
+      + ' you mean to put these under `headers`?',
     ]);
 
     this.socket = SocketIOClient('ws://192.168.1.31:8080');
@@ -24,7 +34,7 @@ export default class MessageManager {
   }
 
   onMessage(): Observable<Message> {
-    return new Observable<Message>(observer => {
+    return new Observable<Message>((observer) => {
       this.socket.on('message', (data: Message) => observer.next(data));
     });
   }
@@ -38,12 +48,4 @@ export default class MessageManager {
     // and it isn't initialized.
     return this.user!;
   }
-
-  static getInstance(): MessageManager {
-    if (!MessageManager.instance) {
-      MessageManager.instance = new MessageManager();
-    }
-    return MessageManager.instance;
-  }
-
 }

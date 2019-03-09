@@ -1,39 +1,39 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, StyleSheet, Button, AsyncStorage } from 'react-native';
+import { Text, View, TextInput, StyleSheet, Button } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import DeviceInfo from 'react-native-device-info';
 
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    margin: 10
+    margin: 10,
   },
   welcome: {
     fontSize: 30,
     textAlign: 'center',
     fontWeight: 'bold',
-    color: '#eb6123'
+    color: '#eb6123',
   },
   insturctions: {
     fontSize: 15,
     textAlign: 'center',
-    marginVertical: 10
+    marginVertical: 10,
   },
   input: {
     backgroundColor: '#ebebeb',
     borderRadius: 20,
-    padding: 10
+    padding: 10,
   },
   button: {
     marginVertical: 10,
-    alignSelf: 'center'
-  }
+    alignSelf: 'center',
+  },
 });
 
 interface Props extends NavigationScreenProps {}
 interface State {
-  username: string
+  username: string;
 }
 
 export default class Register extends Component<Props, State> {
@@ -44,29 +44,29 @@ export default class Register extends Component<Props, State> {
     super(props);
     this.register = this.register.bind(this);
     this.state = {
-      username: ''
+      username: '',
     };
   }
 
   register(): void {
-    const deviceID = DeviceInfo.getUniqueID();
+    const id = DeviceInfo.getUniqueID();
     fetch(this.api, {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
       },
       body: JSON.stringify({
-        'username': this.state.username,
-        'deviceID': deviceID  
-      })
-    }).then(res => {
+        username: this.state.username,
+        deviceID: id,
+      }),
+    }).then((res) => {
       if (res.status === 200) {
         this.props.navigation.replace('LoadingScreen');
       }
     });
   }
 
-  render() {
+  render(): JSX.Element {
     return(
       <View style={ styles.container }>
         <Text style={ styles.welcome }>Welcome!</Text>
@@ -78,7 +78,7 @@ export default class Register extends Component<Props, State> {
           onChangeText={ (text: string) => this.setState({username: text}) }
         />
         <View style={ styles.button }>
-          <Button 
+          <Button
             title='Register'
             color='#eb6123'
             disabled={ !(this.state.username.length > 0) }

@@ -3,18 +3,18 @@ import { View, Text, StyleSheet } from 'react-native';
 import MessageManager from '../services/MessageManager';
 import { Message } from '../models/Message';
 
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flexShrink: 1,
     alignSelf: 'flex-start',
     backgroundColor: '#ebebeb',
     padding: 10,
     margin: 10,
-    borderRadius: 10
+    borderRadius: 10,
   },
   text: {
     fontSize: 15,
-    color: 'rgba(0, 0, 0, 1)'
+    color: 'rgba(0, 0, 0, 1)',
   },
   username: {
     fontSize: 10,
@@ -23,11 +23,11 @@ let styles = StyleSheet.create({
     margin: 10,
     alignSelf: 'flex-end',
     backgroundColor: '#ffA500',
-  }
+  },
 });
 
 interface Props {
-  message: Message
+  message: Message;
 }
 export default class ChatMessage extends Component<Props> {
 
@@ -37,17 +37,17 @@ export default class ChatMessage extends Component<Props> {
     super(props);
     this.messageManager = MessageManager.getInstance();
   }
-  render() {
+
+  render(): JSX.Element {
     const user = JSON.stringify(this.messageManager.getUser());
     const sender = JSON.stringify(this.props.message.user);
-
-    console.log(user);
-    console.log(sender);
 
     return (
       <View style={ [styles.container, (user === sender) ? styles.ownMessage : null] }>
         <Text style={ styles.text }>{ this.props.message.text }</Text>
-        <Text style={[styles.username, (user === sender) ? {textAlign: 'right'} : null ]}>{ this.props.message.user.username }</Text>
+        <Text
+          style={[styles.username, (user === sender) ? {textAlign: 'right'} : null ]}
+        >{ this.props.message.user.username }</Text>
       </View>
     );
   }
