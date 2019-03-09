@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { TextInput, View, StyleSheet, TouchableOpacity, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
+import { TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MessageManager from '../services/MessageManager';
 
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flexShrink: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   input: {
     flex: 1,
@@ -14,17 +14,17 @@ let styles = StyleSheet.create({
     borderRadius: 20,
     margin: 10,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
   },
   button: {
     marginRight: 5,
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
 
 interface Props {}
-interface State { 
-  message: string
+interface State {
+  message: string;
 }
 
 export default class ChatInput extends Component<Props, State> {
@@ -38,25 +38,25 @@ export default class ChatInput extends Component<Props, State> {
 
     this.messageManager = MessageManager.getInstance();
     this.state = {
-      message: ''
-    }
+      message: '',
+    };
   }
 
   sendMessage(): void {
-    if(this.state.message.length > 0) {
+    if (this.state.message.length > 0) {
       this.messageManager.sendMessage({
         user: this.messageManager.getUser(),
-        text: this.state.message
+        text: this.state.message,
       });
-      
+
       this.setState({message: ''});
     }
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <View style={ styles.container }>
-        <TextInput 
+        <TextInput
           style={styles.input}
           onChangeText={(text: string) => this.setState({message: text})}
           value={ this.state.message }
@@ -71,6 +71,6 @@ export default class ChatInput extends Component<Props, State> {
           <Icon name='arrow-right' size={40} color={ !(this.state.message.length > 0) ? '#aaa' : '#eb6123' }/>
         </TouchableOpacity>
       </View>
-    )
+    );
   }
 }

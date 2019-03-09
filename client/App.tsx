@@ -1,14 +1,14 @@
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { createAppContainer, createStackNavigator } from 'react-navigation';
 import ChatScreen from './src/components/ChatScreen';
-import Register from './src/components/Register';
 import LoadingScreen from './src/components/LoadingScreen';
+import Register from './src/components/Register';
 
 const MainNavigation = createStackNavigator({
   LoadingScreen: { screen: LoadingScreen },
   Chat: { screen: ChatScreen },
-  Register: { screen: Register }
+  Register: { screen: Register },
 }, {
-  headerMode: 'none'
+  headerMode: 'none',
 });
 
 const App = createAppContainer(MainNavigation);

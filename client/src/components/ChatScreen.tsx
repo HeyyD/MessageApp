@@ -3,15 +3,15 @@ import { View, StyleSheet } from 'react-native';
 import Chat from './Chat';
 import ChatInput from './ChatInput';
 
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
   chatContainer: {
     flex: 1,
-    justifyContent: 'flex-end'
-  }
+    justifyContent: 'flex-end',
+  },
 });
 
 export default class ChatScreen extends Component {
-  render() {
+  render(): JSX.Element {
     return (
       <View style={styles.chatContainer}>
         <Chat/>

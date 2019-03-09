@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { FlatList } from 'react-native';
-import MessageManager from '../services/MessageManager';
-import ChatMessage from './ChatMessage';
-import { Message } from '../models/Message';
 import { Subscription } from 'rxjs';
+
+import { Message } from '../models/Message';
+import MessageManager from '../services/MessageManager';
+
+import ChatMessage from './ChatMessage';
 
 interface Props {}
 interface State {
-  messages: Message[]
+  messages: Message[];
 }
 export default class Chat extends Component<Props, State> {
 
@@ -20,26 +22,26 @@ export default class Chat extends Component<Props, State> {
     this.messageManager = MessageManager.getInstance();
 
     this.state = {
-      messages: []
-    }
+      messages: [],
+    };
   }
 
-  componentDidMount() {
-    this.messageSubscription = this.messageManager.onMessage().subscribe(message => {
+  componentDidMount(): void {
+    this.messageSubscription = this.messageManager.onMessage().subscribe((message) => {
       this.messages.push(message);
       this.setState({
-        messages: [...this.messages]
+        messages: [...this.messages],
       });
     });
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     if (this.messageSubscription) {
       this.messageSubscription.unsubscribe();
     }
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <FlatList
         inverted={ true }
