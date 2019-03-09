@@ -4,6 +4,15 @@
         "tslint:recommended"
     ],
     "jsRules": {},
-    "rules": {},
+    "rules": {
+        "quotemark": false,
+        "object-literal-sort-keys": false,
+        "semicolon": true,
+        "interface-name": false,
+        "no-empty-interface": false,
+        "member-access": false,
+        "typedef": [true, "call-signature"],
+        "ordered-imports": false
+    },
     "rulesDirectory": []
 }
