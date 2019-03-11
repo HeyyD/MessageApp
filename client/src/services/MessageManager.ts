@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Message } from '../models/Message';
 import { User } from '../models/User';
 
+import * as variables from '../../variables.json';
+
 export default class MessageManager {
 
   static getInstance(): MessageManager {
@@ -26,7 +28,7 @@ export default class MessageManager {
       + ' you mean to put these under `headers`?',
     ]);
 
-    this.socket = SocketIOClient('ws://192.168.1.31:8080');
+    this.socket = SocketIOClient(`ws://${variables.server}`);
   }
 
   sendMessage(message: Message): void {

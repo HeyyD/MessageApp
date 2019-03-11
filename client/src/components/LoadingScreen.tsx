@@ -5,6 +5,8 @@ import DeviceInfo from 'react-native-device-info';
 import MessageManager from '../services/MessageManager';
 import { User } from '../models/User';
 
+import * as variables from '../../variables.json';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -21,7 +23,7 @@ interface Props extends NavigationScreenProps {}
 
 export default class LoadingScreen extends Component<Props> {
 
-  private api: string = 'http://192.168.1.31:8080/api/users/';
+  private api: string = `http://${variables.server}/api/users/`;
 
   componentDidMount(): void {
     this.init();
