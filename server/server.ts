@@ -4,7 +4,7 @@ import * as socketio from 'socket.io';
 import * as mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 import { Message } from './src/message/models/message';
-import { Users } from './src/routes/users';
+import { Users } from './src/user/routes/users';
 import { listenMessages } from './src/message/websocket/messageSocket';
 
 class MessageServer {
