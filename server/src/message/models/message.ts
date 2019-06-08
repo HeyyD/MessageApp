@@ -7,7 +7,10 @@ export interface Message extends Document {
 }
 
 const schema = new Schema({
-  user: UserModel,
+  user: {
+    username: String,
+    deviceID: String
+  },
   text: String
 });
 
