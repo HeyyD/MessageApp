@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 import { Subscription } from 'rxjs';
 
 import { Message } from '../models/Message';
-import MessageManager from '../services/MessageManager';
+import MessageService from '../services/MessageService';
 
 import ChatMessage from './ChatMessage';
 
@@ -13,13 +13,13 @@ interface State {
 }
 export default class Chat extends Component<Props, State> {
 
-  private messageManager: MessageManager;
+  private messageManager: MessageService;
   private messageSubscription?: Subscription;
   private messages: Message[] = [];
 
   constructor(props: Props) {
     super(props);
-    this.messageManager = MessageManager.getInstance();
+    this.messageManager = MessageService.getInstance();
 
     this.state = {
       messages: [],

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import MessageManager from '../services/MessageManager';
+import MessageService from '../services/MessageService';
 import { Message } from '../models/Message';
 
 const styles = StyleSheet.create({
@@ -31,11 +31,11 @@ interface Props {
 }
 export default class ChatMessage extends Component<Props> {
 
-  private messageManager: MessageManager;
+  private messageManager: MessageService;
 
   constructor(props: Props) {
     super(props);
-    this.messageManager = MessageManager.getInstance();
+    this.messageManager = MessageService.getInstance();
   }
 
   render(): JSX.Element {

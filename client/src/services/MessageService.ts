@@ -3,16 +3,16 @@ import { Message } from '../models/Message';
 import { User } from '../models/User';
 import Websocket from './Websocket';
 
-export default class MessageManager {
+export default class MessageService {
 
-  static getInstance(): MessageManager {
-    if (!MessageManager.instance) {
-      MessageManager.instance = new MessageManager();
+  static getInstance(): MessageService {
+    if (!MessageService.instance) {
+      MessageService.instance = new MessageService();
     }
-    return MessageManager.instance;
+    return MessageService.instance;
   }
 
-  private static instance: MessageManager;
+  private static instance: MessageService;
   private user?: User;
 
   sendMessage(message: Message): void {

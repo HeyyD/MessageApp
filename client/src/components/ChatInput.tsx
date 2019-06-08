@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import MessageManager from '../services/MessageManager';
+import MessageService from '../services/MessageService';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,14 +29,14 @@ interface State {
 
 export default class ChatInput extends Component<Props, State> {
 
-  private messageManager: MessageManager;
+  private messageManager: MessageService;
 
   constructor(props: Props) {
     super(props);
 
     this.sendMessage = this.sendMessage.bind(this);
 
-    this.messageManager = MessageManager.getInstance();
+    this.messageManager = MessageService.getInstance();
     this.state = {
       message: '',
     };

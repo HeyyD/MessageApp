@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ActivityIndicator, StyleSheet } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import DeviceInfo from 'react-native-device-info';
-import MessageManager from '../services/MessageManager';
+import MessageService from '../services/MessageService';
 import { User } from '../models/User';
 
 import * as variables from '../../variables.json';
@@ -54,7 +54,7 @@ export default class LoadingScreen extends Component<Props> {
   }
 
   private initMessageManager(user: User): void {
-    const manager = MessageManager.getInstance();
+    const manager = MessageService.getInstance();
     manager.setUser(user);
   }
 }
