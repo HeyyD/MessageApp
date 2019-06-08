@@ -3,8 +3,9 @@ import * as express from 'express';
 import * as socketio from 'socket.io';
 import * as mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
-import { Message } from './src/models/message';
-import { Users } from './src/routes/users';
+import { Message } from './src/message/models/message';
+import { Users } from './src/user/routes/users';
+import { listenMessages } from './src/message/websocket/messageSocket';
 
 class MessageServer {
   
@@ -45,8 +46,10 @@ class MessageServer {
     this.websocket.on('connect', (socket) => {
       console.log(`Client connected: ${socket.id}`);
 
-      socket.on('message', (message: Message) => {
-        this.websocket.emit('message', message);
+      listenMessages(this.websocket, socket);
+
+      socket.on('disconnect', () => {
+        console.log(`Client disconnected: ${socket.id}`);
       });
     });
 

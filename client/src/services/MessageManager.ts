@@ -1,10 +1,7 @@
-import { YellowBox } from 'react-native';
-import SocketIOClient from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { Message } from '../models/Message';
 import { User } from '../models/User';
-
-import * as variables from '../../variables.json';
+import Websocket from './Websocket';
 
 export default class MessageManager {
 
@@ -16,28 +13,15 @@ export default class MessageManager {
   }
 
   private static instance: MessageManager;
-  private socket: SocketIOClient.Socket;
   private user?: User;
 
-  private constructor() {
-    // tslint:disable-next-line: no-console
-    console.ignoredYellowBox = ['Remote debugger'];
-    YellowBox.ignoreWarnings([
-      'Unrecognized WebSocket connection option(s) `agent`, `perMessageDeflate`, `pfx`,'
-      + '`key`, `passphrase`, `cert`, `ca`, `ciphers`, `rejectUnauthorized`. Did'
-      + ' you mean to put these under `headers`?',
-    ]);
-
-    this.socket = SocketIOClient(`ws://${variables.server}`);
-  }
-
   sendMessage(message: Message): void {
-    this.socket.emit('message', message);
+    Websocket.getInstance().getSocket().emit('message', message);
   }
 
   onMessage(): Observable<Message> {
     return new Observable<Message>((observer) => {
-      this.socket.on('message', (data: Message) => observer.next(data));
+      Websocket.getInstance().getSocket().on('message', (data: Message) => observer.next(data));
     });
   }
 
