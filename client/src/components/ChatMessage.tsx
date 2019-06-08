@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import MessageService from '../services/MessageService';
 import { Message } from '../models/Message';
+import UserService from '../services/UserService';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,15 +32,15 @@ interface Props {
 }
 export default class ChatMessage extends Component<Props> {
 
-  private messageManager: MessageService;
+  private userService: UserService;
 
   constructor(props: Props) {
     super(props);
-    this.messageManager = MessageService.getInstance();
+    this.userService = UserService.getInstance();
   }
 
   render(): JSX.Element {
-    const user = JSON.stringify(this.messageManager.getUser());
+    const user = JSON.stringify(this.userService.getUser());
     const sender = JSON.stringify(this.props.message.user);
 
     return (

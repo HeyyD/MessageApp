@@ -6,6 +6,7 @@ import MessageService from '../services/MessageService';
 import { User } from '../models/User';
 
 import * as variables from '../../variables.json';
+import UserService from '../services/UserService';
 
 const styles = StyleSheet.create({
   container: {
@@ -44,7 +45,7 @@ export default class LoadingScreen extends Component<Props> {
     fetch(this.api + deviceID).then((res) => {
       if (res.status === 200) {
         res.json().then((user: User) => {
-          this.initMessageManager(user);
+          this.initUserService(user);
           this.props.navigation.replace('Chat');
         });
       } else if (res.status === 404) {
@@ -53,8 +54,7 @@ export default class LoadingScreen extends Component<Props> {
     });
   }
 
-  private initMessageManager(user: User): void {
-    const manager = MessageService.getInstance();
-    manager.setUser(user);
+  private initUserService(user: User): void {
+    UserService.getInstance().setUser(user);
   }
 }

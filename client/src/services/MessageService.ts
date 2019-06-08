@@ -13,7 +13,6 @@ export default class MessageService {
   }
 
   private static instance: MessageService;
-  private user?: User;
 
   sendMessage(message: Message): void {
     Websocket.getInstance().getSocket().emit('message', message);
@@ -23,15 +22,5 @@ export default class MessageService {
     return new Observable<Message>((observer) => {
       Websocket.getInstance().getSocket().on('message', (data: Message) => observer.next(data));
     });
-  }
-
-  setUser(user: User): void {
-    this.user = user;
-  }
-
-  getUser(): User {
-    // There really shouldn't be any moment when we try to retreve the user
-    // and it isn't initialized.
-    return this.user!;
   }
 }
