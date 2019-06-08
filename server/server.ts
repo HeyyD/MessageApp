@@ -6,6 +6,7 @@ import * as dotenv from 'dotenv';
 import * as bodyParser from 'body-parser';
 import { initUsersController } from './src/user/routes/usersController';
 import { listenMessages } from './src/message/websocket/messageSocket';
+import { initMessagesController } from './src/message/routes/messagesController';
 
 class MessageServer {
   
@@ -24,6 +25,7 @@ class MessageServer {
     this.app.use(bodyParser.json());
     
     initUsersController(this.app);
+    initMessagesController(this.app);
 
     dotenv.config();
 
