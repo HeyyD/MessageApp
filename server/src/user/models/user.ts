@@ -1,13 +1,13 @@
-import * as mongoose from 'mongoose';
+import { Schema, model, Document } from "mongoose";
 
-export interface User extends mongoose.Document {
+export interface User extends Document {
   username: string;
   deviceID: string;
 }
 
-const schema = new mongoose.Schema({
+const schema = new Schema({
   username: String,
   deviceID: String
 });
 
-export const UserModel = mongoose.model<User>('UserModel', schema);
+export const UserModel = model<User>('UserModel', schema);
