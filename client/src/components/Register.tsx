@@ -3,6 +3,8 @@ import { Text, View, TextInput, StyleSheet, Button } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import DeviceInfo from 'react-native-device-info';
 
+import * as variables from '../../variables.json';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -38,7 +40,7 @@ interface State {
 
 export default class Register extends Component<Props, State> {
 
-  private api: string = 'http://192.168.1.31:8080/api/users/';
+  private api: string = `http://${variables.server}}/api/users/`;
 
   constructor(props: Props) {
     super(props);
