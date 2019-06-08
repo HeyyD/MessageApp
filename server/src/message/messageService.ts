@@ -7,4 +7,8 @@ export class MessageService {
       throw new Error(err);
     });
   }
+
+  getMessages(): Promise<Message[]> {
+    return MessageModel.find().exec();
+  }
 }

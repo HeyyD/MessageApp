@@ -3,7 +3,7 @@ import * as bodyParser from 'body-parser';
 import { User, UserModel } from '../models/user';
 import { UserService } from '../userService';
 
-export class Users {
+export class UsersController {
 
   private router = express.Router();
   private userService = new UserService();
