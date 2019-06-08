@@ -3,7 +3,8 @@ import * as express from 'express';
 import * as socketio from 'socket.io';
 import * as mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
-import { UsersController } from './src/user/routes/usersController';
+import * as bodyParser from 'body-parser';
+import { initUsersController } from './src/user/routes/usersController';
 import { listenMessages } from './src/message/websocket/messageSocket';
 
 class MessageServer {
@@ -11,7 +12,6 @@ class MessageServer {
   private app: express.Application;
   private server: Server;
   private websocket: socketio.Server;
-  private userRoutes: UsersController;
 
   private address = '192.168.1.31';
   private port = 8080;
@@ -20,7 +20,11 @@ class MessageServer {
     this.app = express();
     this.server = createServer(this.app);
     this.websocket = socketio(this.server);
-    this.userRoutes = new UsersController(this.app);
+
+    this.app.use(bodyParser.json());
+    
+    initUsersController(this.app);
+
     dotenv.config();
 
     this.startServer();
