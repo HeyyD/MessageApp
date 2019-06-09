@@ -5,6 +5,7 @@ import UserService from "../services/UserService";
 import { User } from "../models/User";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Subscription } from "rxjs";
+import { NavigationScreenProps } from "react-navigation";
 
 const styles = StyleSheet.create({
   button: {
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
   },
 });
 
-interface Props {}
+interface Props extends NavigationScreenProps {}
 interface State {
   users: User[];
 }
@@ -61,8 +62,9 @@ export default class UserList extends Component<Props, State> {
   }
 
   private userListItem(user: User): JSX.Element {
+    const { navigate } = this.props.navigation;
     return (
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity onPress={() => navigate('ChatScreen')} style={styles.button}>
         <Icon name='user' size={40} color={'#ffA500'} />
         <Text style={ styles.buttonText }>{ user.username }</Text>
       </TouchableOpacity>

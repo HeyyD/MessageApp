@@ -6,7 +6,7 @@ import UserList from './src/components/UserList';
 
 const MainNavigation = createStackNavigator({
   LoadingScreen: { screen: LoadingScreen },
-  Chat: { screen: ChatScreen },
+  ChatScreen: { screen: ChatScreen },
   UserList: { screen: UserList },
   Register: { screen: Register },
 }, {
