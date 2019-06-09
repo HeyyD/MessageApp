@@ -22,7 +22,7 @@ export default class UserService {
     this.user = user;
   }
 
-  getUser(): User {
+  getCurrentUser(): User {
     // There really shouldn't be any moment when we try to retreve the user
     // and it isn't initialized.
     return this.user!;

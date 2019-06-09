@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import MessageService from '../services/MessageService';
 import { Message } from '../models/Message';
 import UserService from '../services/UserService';
 
@@ -40,7 +39,7 @@ export default class ChatMessage extends Component<Props> {
   }
 
   render(): JSX.Element {
-    const user = this.userService.getUser().deviceID;
+    const user = this.userService.getCurrentUser().deviceID;
     const sender = this.props.message.user.deviceID;
 
     return (
