@@ -55,6 +55,6 @@ export default class LoadingScreen extends Component<Props> {
   }
 
   private initUserService(user: User): void {
-    UserService.instance.setUser(user);
+    UserService.instance.user = user;
   }
 }

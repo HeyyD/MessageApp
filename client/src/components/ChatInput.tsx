@@ -49,7 +49,7 @@ export default class ChatInput extends Component<Props, State> {
   sendMessage(): void {
     if (this.state.message.length > 0) {
       this.messageManager.sendMessage({
-        user: this.userService.getCurrentUser(),
+        user: this.userService.user,
         text: this.state.message,
       });
 

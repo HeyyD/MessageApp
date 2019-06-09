@@ -17,23 +17,21 @@ export default class UserService {
     return this._users;
   }
 
-  private user?: User;
+  public get user(): User {
+    return this._user!;
+  }
+
+  public set user(user: User) {
+    this._user = user;
+  }
+
+  private _user?: User;
   private _users: User[] = [];
 
   private api: string = `http://${variables.server}/api/users/`;
 
   private constructor() {
     this.fetchUsers();
-  }
-
-  setUser(user: User): void {
-    this.user = user;
-  }
-
-  getCurrentUser(): User {
-    // There really shouldn't be any moment when we try to retreve the user
-    // and it isn't initialized.
-    return this.user!;
   }
 
   register(username: string, onSucces: () => void): void {

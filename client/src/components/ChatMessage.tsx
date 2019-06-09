@@ -39,7 +39,7 @@ export default class ChatMessage extends Component<Props> {
   }
 
   render(): JSX.Element {
-    const user = this.userService.getCurrentUser().deviceID;
+    const user = this.userService.user.deviceID;
     const sender = this.props.message.user.deviceID;
 
     return (
