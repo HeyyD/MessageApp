@@ -1,6 +1,7 @@
 import { User } from "./User";
 
 export interface Message {
-  user: User;
+  sender: User;
+  receiver: User;
   text: string;
 }
