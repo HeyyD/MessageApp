@@ -5,6 +5,7 @@ export interface Message extends Document {
   sender: User;
   receiver: User;
   text: string;
+  created_ts: Date;
 }
 
 const schema = new Schema({
@@ -16,7 +17,11 @@ const schema = new Schema({
     username: String,
     deviceID: String
   },
-  text: String
+  text: String,
+  created_ts: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 export const MessageModel = model<Message>('MessageModel', schema);

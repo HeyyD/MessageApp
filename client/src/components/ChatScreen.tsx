@@ -22,7 +22,7 @@ export default class ChatScreen extends Component<Props> {
   render(): JSX.Element {
     return (
       <View style={styles.chatContainer}>
-        <Chat/>
+        <Chat receiver={this.props.navigation.getParam('receiver')}/>
         <ChatInput receiver={ this.props.navigation.getParam('receiver') }/>
       </View>
     );
