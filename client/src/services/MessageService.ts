@@ -6,14 +6,14 @@ import * as variables from '../../variables.json';
 
 export default class MessageService {
 
-  static getInstance(): MessageService {
-    if (!MessageService.instance) {
-      MessageService.instance = new MessageService();
+  static  get instance(): MessageService {
+    if (!MessageService._instance) {
+      MessageService._instance = new MessageService();
     }
-    return MessageService.instance;
+    return MessageService._instance;
   }
 
-  private static instance: MessageService;
+  private static _instance: MessageService;
 
   public get messages(): Observable<Message[]> {
     return this._messages;
