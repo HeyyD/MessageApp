@@ -38,7 +38,8 @@ export default class UserList extends Component<Props, State> {
   }
 
   componentDidMount(): void {
-    this.usersSubscription = this.userService.users.subscribe((users) => {
+    this.usersSubscription = this.userService.users.subscribe((data) => {
+      const users = data.filter((user) => user.deviceID !== this.userService.user.deviceID);
       this.setState({users});
     });
   }
