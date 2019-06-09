@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, ToastAndroid } from 'react-native';
 import { Subscription } from 'rxjs';
 
 import { Message } from '../models/Message';
@@ -20,6 +20,7 @@ export default class Chat extends Component<Props, State> {
   private messageService: MessageService;
   private userService: UserService;
 
+  private messagesSubscription?: Subscription;
   private messageSubscription?: Subscription;
 
   constructor(props: Props) {
@@ -33,15 +34,30 @@ export default class Chat extends Component<Props, State> {
   }
 
   componentDidMount(): void {
-    this.messageSubscription = this.messageService.messages.subscribe((messages) => {
+    this.messagesSubscription = this.messageService.messages.subscribe((messages) => {
       this.setState({
         messages: [...messages],
       });
     });
+
+    this.messageSubscription = this.messageService.onMessage().subscribe((message) => {
+      if (message.sender.deviceID !== this.props.receiver.deviceID) {
+        ToastAndroid.showWithGravity(
+          `New message from ${message.sender.username}`,
+          ToastAndroid.LONG,
+          ToastAndroid.TOP,
+        );
+      }
+    });
+
     this.messageService.getMessages(this.userService.user.deviceID, this.props.receiver.deviceID);
   }
 
   componentWillUnmount(): void {
+    if (this.messagesSubscription) {
+      this.messagesSubscription.unsubscribe();
+    }
+
     if (this.messageSubscription) {
       this.messageSubscription.unsubscribe();
     }
