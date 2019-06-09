@@ -17,7 +17,7 @@ export default class Chat extends Component<Props, State> {
   private messageSubscription?: Subscription;
   constructor(props: Props) {
     super(props);
-    this.messageService = MessageService.getInstance();
+    this.messageService = MessageService.instance;
 
     this.state = {
       messages: [],

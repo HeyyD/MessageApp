@@ -38,7 +38,7 @@ interface State {
 
 export default class Register extends Component<Props, State> {
 
-  private userService = UserService.getInstance();
+  private userService = UserService.instance;
 
   constructor(props: Props) {
     super(props);
