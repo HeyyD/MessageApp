@@ -64,7 +64,7 @@ export default class UserList extends Component<Props, State> {
   private userListItem(user: User): JSX.Element {
     const { navigate } = this.props.navigation;
     return (
-      <TouchableOpacity onPress={() => navigate('ChatScreen')} style={styles.button}>
+      <TouchableOpacity onPress={() => navigate('ChatScreen', { receiver: user })} style={styles.button}>
         <Icon name='user' size={40} color={'#ffA500'} />
         <Text style={ styles.buttonText }>{ user.username }</Text>
       </TouchableOpacity>

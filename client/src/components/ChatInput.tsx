@@ -3,6 +3,7 @@ import { TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MessageService from '../services/MessageService';
 import UserService from '../services/UserService';
+import { User } from '../models/User';
 
 const styles = StyleSheet.create({
   container: {
@@ -23,7 +24,9 @@ const styles = StyleSheet.create({
   },
 });
 
-interface Props {}
+interface Props {
+  receiver: User;
+}
 interface State {
   message: string;
 }
@@ -49,7 +52,8 @@ export default class ChatInput extends Component<Props, State> {
   sendMessage(): void {
     if (this.state.message.length > 0) {
       this.messageManager.sendMessage({
-        user: this.userService.user,
+        sender: this.userService.user,
+        receiver: this.props.receiver,
         text: this.state.message,
       });
 

@@ -40,14 +40,14 @@ export default class ChatMessage extends Component<Props> {
 
   render(): JSX.Element {
     const user = this.userService.user.deviceID;
-    const sender = this.props.message.user.deviceID;
+    const sender = this.props.message.sender.deviceID;
 
     return (
       <View style={ [styles.container, (user === sender) ? styles.ownMessage : null] }>
         <Text style={ styles.text }>{ this.props.message.text }</Text>
         <Text
           style={[styles.username, (user === sender) ? {textAlign: 'right'} : null ]}
-        >{ this.props.message.user.username }</Text>
+        >{ this.props.message.sender.username }</Text>
       </View>
     );
   }

@@ -10,5 +10,15 @@ export const initMessagesController = (app: Application) => {
     res.status(200).send(messages);
   });
 
+  router.get('/:sender/:receiver', async (req: Request, res: Response) => {
+    const messages = await messageService.getMessagesForChat(req.params.sender, req.params.receiver);
+
+    if (messages) {
+      res.status(200).send(messages);
+    } else {
+      res.status(204).send([]);
+    }
+  });
+
   app.use('/api/messages', router);
 };

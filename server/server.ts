@@ -12,7 +12,7 @@ class MessageServer {
   
   private app: express.Application;
   private server: Server;
-  private websocket: socketio.Server;
+  private io: socketio.Server;
 
   private address = '192.168.1.31';
   private port = 8080;
@@ -20,7 +20,7 @@ class MessageServer {
   constructor() {
     this.app = express();
     this.server = createServer(this.app);
-    this.websocket = socketio(this.server);
+    this.io = socketio(this.server);
 
     this.app.use(bodyParser.json());
     
@@ -48,10 +48,10 @@ class MessageServer {
       console.log(`The server is running in ${this.address}:${this.port}`);
     });
 
-    this.websocket.on('connect', (socket) => {
+    this.io.on('connect', (socket) => {
       console.log(`Client connected: ${socket.id}`);
 
-      listenMessages(this.websocket, socket);
+      listenMessages(this.io, socket);
 
       socket.on('disconnect', () => {
         console.log(`Client disconnected: ${socket.id}`);

@@ -6,18 +6,26 @@ import { Message } from '../models/Message';
 import MessageService from '../services/MessageService';
 
 import ChatMessage from './ChatMessage';
+import UserService from '../services/UserService';
+import { User } from '../models/User';
 
-interface Props {}
+interface Props {
+  receiver: User;
+}
 interface State {
   messages: Message[];
 }
 export default class Chat extends Component<Props, State> {
 
   private messageService: MessageService;
+  private userService: UserService;
+
   private messageSubscription?: Subscription;
+
   constructor(props: Props) {
     super(props);
     this.messageService = MessageService.instance;
+    this.userService = UserService.instance;
 
     this.state = {
       messages: [],
@@ -30,6 +38,7 @@ export default class Chat extends Component<Props, State> {
         messages: [...messages],
       });
     });
+    this.messageService.getMessages(this.userService.user.deviceID, this.props.receiver.deviceID);
   }
 
   componentWillUnmount(): void {

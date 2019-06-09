@@ -27,15 +27,15 @@ export default class MessageService {
   private constructor() {
     this._messages = this.messagesSubject.asObservable();
     this.updateMessages();
-    this.getMessages();
+    // this.getMessages();
   }
 
   sendMessage(message: Message): void {
     Websocket.instance.socket.emit('message', message);
   }
 
-  getMessages(): void {
-    fetch(this.api)
+  getMessages(senderId: string, receiverId: string): void {
+    fetch(`${this.api}/${senderId}/${receiverId}`)
     .then((res) => res.json())
     .then((res) => this.messagesSubject.next(res));
   }
