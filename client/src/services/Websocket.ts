@@ -5,15 +5,19 @@ import * as variables from '../../variables.json';
 
 export default class Websocket {
 
-  static getInstance(): Websocket {
-    if (!Websocket.instance) {
-      Websocket.instance = new Websocket();
+  static get instance(): Websocket {
+    if (!Websocket._instance) {
+      Websocket._instance = new Websocket();
     }
-    return Websocket.instance;
+    return Websocket._instance;
   }
 
-  private static instance: Websocket;
-  private socket: SocketIOClient.Socket;
+  get socket(): SocketIOClient.Socket {
+    return this._socket;
+  }
+
+  private static _instance: Websocket;
+  private _socket: SocketIOClient.Socket;
 
   private constructor() {
     // tslint:disable-next-line: no-console
@@ -24,10 +28,6 @@ export default class Websocket {
       + ' you mean to put these under `headers`?',
     ]);
 
-    this.socket = SocketIOClient(`ws://${variables.server}`);
-  }
-
-  getSocket(): SocketIOClient.Socket {
-    return this.socket;
+    this._socket = SocketIOClient(`ws://${variables.server}`);
   }
 }

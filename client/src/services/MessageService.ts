@@ -31,7 +31,7 @@ export default class MessageService {
   }
 
   sendMessage(message: Message): void {
-    Websocket.getInstance().getSocket().emit('message', message);
+    Websocket.instance.socket.emit('message', message);
   }
 
   getMessages(): void {
@@ -42,7 +42,7 @@ export default class MessageService {
 
   onMessage(): Observable<Message> {
     return new Observable<Message>((observer) => {
-      Websocket.getInstance().getSocket().on('message', (data: Message) => observer.next(data));
+      Websocket.instance.socket.on('message', (data: Message) => observer.next(data));
     });
   }
 
