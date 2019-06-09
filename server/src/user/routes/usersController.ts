@@ -7,7 +7,12 @@ export const initUsersController = (app: Application) => {
   const userService = new UserService();
 
   router.get('/', async (req: Request, res: Response) => {
-    console.log('get users');
+    const users = await userService.getUsers();
+    if (!users) {
+      res.status(404).send(users);
+    } else {
+      res.status(200).send(users);
+    }
   });
 
   router.get('/:id', async (req: Request, res: Response) => {
