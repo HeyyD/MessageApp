@@ -16,8 +16,7 @@ export const initUsersController = (app: express.Application) => {
   });
 
   router.post('/', async (req: express.Request, res: express.Response) => {
-    const user = req.body as User;
-    
+    const user = req.body as User;    
     try {
       const created = await userService.createUser(user);
       res.status(200).send(created);

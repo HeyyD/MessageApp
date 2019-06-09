@@ -23,4 +23,5 @@ export default class MessageService {
       Websocket.getInstance().getSocket().on('message', (data: Message) => observer.next(data));
     });
   }
+
 }
