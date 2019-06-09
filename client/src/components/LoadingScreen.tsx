@@ -46,7 +46,7 @@ export default class LoadingScreen extends Component<Props> {
       if (res.status === 200) {
         res.json().then((user: User) => {
           this.initUserService(user);
-          this.props.navigation.replace('Chat');
+          this.props.navigation.replace('UserList');
         });
       } else if (res.status === 404) {
         this.props.navigation.replace('Register');

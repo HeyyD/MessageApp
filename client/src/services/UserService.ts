@@ -2,6 +2,7 @@ import { User } from "../models/User";
 import DeviceInfo from 'react-native-device-info';
 
 import * as variables from '../../variables.json';
+import { Observable, BehaviorSubject } from "rxjs";
 
 export default class UserService {
   static get instance(): UserService {
@@ -13,7 +14,7 @@ export default class UserService {
 
   private static _instance: UserService;
 
-  public get users(): User[] {
+  public get users(): Observable<User[]> {
     return this._users;
   }
 
@@ -26,11 +27,13 @@ export default class UserService {
   }
 
   private _user?: User;
-  private _users: User[] = [];
+  private _users: Observable<User[]> = new Observable<User[]>();
+  private usersSubject = new BehaviorSubject([]);
 
   private api: string = `http://${variables.server}/api/users/`;
 
   private constructor() {
+    this._users = this.usersSubject.asObservable();
     this.fetchUsers();
   }
 
@@ -58,7 +61,7 @@ export default class UserService {
   private fetchUsers(): void {
     fetch(this.api)
     .then((res) => res.json())
-    .then((res) => this._users = res);
+    .then((res) => this.usersSubject.next(res));
   }
 
 }
