@@ -35,7 +35,7 @@ export default class ChatMessage extends Component<Props> {
 
   constructor(props: Props) {
     super(props);
-    this.userService = UserService.getInstance();
+    this.userService = UserService.instance;
   }
 
   render(): JSX.Element {

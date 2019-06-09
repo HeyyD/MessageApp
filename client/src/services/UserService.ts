@@ -4,14 +4,14 @@ import DeviceInfo from 'react-native-device-info';
 import * as variables from '../../variables.json';
 
 export default class UserService {
-  static getInstance(): UserService {
-    if (!UserService.instance) {
-      UserService.instance = new UserService();
+  static get instance(): UserService {
+    if (!UserService._instance) {
+      UserService._instance = new UserService();
     }
-    return UserService.instance;
+    return UserService._instance;
   }
 
-  private static instance: UserService;
+  private static _instance: UserService;
 
   public get users(): User[] {
     return this._users;

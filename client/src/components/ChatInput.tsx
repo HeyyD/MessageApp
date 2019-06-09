@@ -39,7 +39,7 @@ export default class ChatInput extends Component<Props, State> {
     this.sendMessage = this.sendMessage.bind(this);
 
     this.messageManager = MessageService.getInstance();
-    this.userService = UserService.getInstance();
+    this.userService = UserService.instance;
 
     this.state = {
       message: '',
