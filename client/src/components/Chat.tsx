@@ -13,13 +13,11 @@ interface State {
 }
 export default class Chat extends Component<Props, State> {
 
-  private messageManager: MessageService;
+  private messageService: MessageService;
   private messageSubscription?: Subscription;
-  private messages: Message[] = [];
-
   constructor(props: Props) {
     super(props);
-    this.messageManager = MessageService.getInstance();
+    this.messageService = MessageService.getInstance();
 
     this.state = {
       messages: [],
@@ -27,10 +25,9 @@ export default class Chat extends Component<Props, State> {
   }
 
   componentDidMount(): void {
-    this.messageSubscription = this.messageManager.onMessage().subscribe((message) => {
-      this.messages.push(message);
+    this.messageSubscription = this.messageService.messages.subscribe((messages) => {
       this.setState({
-        messages: [...this.messages],
+        messages: [...messages],
       });
     });
   }
