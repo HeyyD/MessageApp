@@ -15,13 +15,17 @@ export default class MessageService {
 
   private static instance: MessageService;
 
-  public messages: Observable<Message[]> = new Observable<Message[]>();
+  public get messages(): Observable<Message[]> {
+    return this._messages;
+  }
+
+  private _messages: Observable<Message[]> = new Observable<Message[]>();
 
   private api = `http://${variables.server}/api/messages`;
   private messagesSubject = new BehaviorSubject<Message[]>([]);
 
   private constructor() {
-    this.messages = this.messagesSubject.asObservable();
+    this._messages = this.messagesSubject.asObservable();
     this.updateMessages();
     this.getMessages();
   }

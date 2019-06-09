@@ -13,10 +13,18 @@ export default class UserService {
 
   private static instance: UserService;
 
+  public get users(): User[] {
+    return this._users;
+  }
+
   private user?: User;
+  private _users: User[] = [];
+
   private api: string = `http://${variables.server}/api/users/`;
 
-  private constructor() {}
+  private constructor() {
+    this.fetchUsers();
+  }
 
   setUser(user: User): void {
     this.user = user;
@@ -47,6 +55,12 @@ export default class UserService {
     .catch((err) => {
       console.log(err.message);
     });
+  }
+
+  private fetchUsers(): void {
+    fetch(this.api)
+    .then((res) => res.json())
+    .then((res) => this._users = res);
   }
 
 }
