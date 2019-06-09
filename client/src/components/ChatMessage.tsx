@@ -40,8 +40,8 @@ export default class ChatMessage extends Component<Props> {
   }
 
   render(): JSX.Element {
-    const user = JSON.stringify(this.userService.getUser());
-    const sender = JSON.stringify(this.props.message.user);
+    const user = this.userService.getUser().deviceID;
+    const sender = this.props.message.user.deviceID;
 
     return (
       <View style={ [styles.container, (user === sender) ? styles.ownMessage : null] }>
