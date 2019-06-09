@@ -4,6 +4,7 @@ import { FlatList, Text, StyleSheet, TouchableOpacity } from "react-native";
 import UserService from "../services/UserService";
 import { User } from "../models/User";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Subscription } from "rxjs";
 
 const styles = StyleSheet.create({
   button: {
@@ -27,6 +28,7 @@ interface State {
 export default class UserList extends Component<Props, State> {
 
   private userService = UserService.instance;
+  private usersSubscription?: Subscription;
 
   constructor(props: Props) {
     super(props);
@@ -36,9 +38,15 @@ export default class UserList extends Component<Props, State> {
   }
 
   componentDidMount(): void {
-    this.userService.users.subscribe((users) => {
+    this.usersSubscription = this.userService.users.subscribe((users) => {
       this.setState({users});
     });
+  }
+
+  componentWillUnmount(): void {
+    if (this.usersSubscription) {
+      this.usersSubscription.unsubscribe();
+    }
   }
 
   render(): JSX.Element {
