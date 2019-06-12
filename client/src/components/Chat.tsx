@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FlatList, ToastAndroid } from 'react-native';
-import { Subscription } from 'rxjs';
+import { Subscription, zip, combineLatest, concat } from 'rxjs';
 
 import { Message } from '../models/Message';
 import MessageService from '../services/MessageService';
@@ -34,14 +34,18 @@ export default class Chat extends Component<Props, State> {
   }
 
   componentDidMount(): void {
+    this.messageService.currentChat = this.props.receiver.deviceID;
     this.messagesSubscription = this.messageService.messages.subscribe((messages) => {
       this.setState({
         messages: [...messages],
       });
     });
 
-    this.messageSubscription = this.messageService.onMessage().subscribe((message) => {
-      if (message.sender.deviceID !== this.props.receiver.deviceID) {
+    this.messageSubscription = this.messageService.message.subscribe((message) => {
+      if (
+        (message.sender.deviceID !== this.props.receiver.deviceID) &&
+        (message.sender.deviceID !== this.userService.user.deviceID)
+        ) {
         ToastAndroid.showWithGravity(
           `New message from ${message.sender.username}`,
           ToastAndroid.LONG,
