@@ -5,7 +5,6 @@ import * as mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 import * as bodyParser from 'body-parser';
 import { initUsersController } from './src/user/routes/usersController';
-import { listenMessages } from './src/message/websocket/messageSocket';
 import { initMessagesController } from './src/message/routes/messagesController';
 import { initConnections } from './src/connection/connectionSocket';
 

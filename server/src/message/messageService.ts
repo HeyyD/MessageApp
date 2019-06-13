@@ -1,5 +1,4 @@
 import { Message, MessageModel } from "./models/message";
-import { User } from "../user/models/user";
 
 export class MessageService {
   saveMessage(message: Message): Promise<Message> {

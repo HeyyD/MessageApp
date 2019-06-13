@@ -1,4 +1,4 @@
-import { User, UserModel } from "../../user/models/user";
+import { User } from "../../user/models/user";
 import { Schema, model, Document } from "mongoose";
 
 export interface Message extends Document {
