@@ -5,8 +5,8 @@ import * as mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 import * as bodyParser from 'body-parser';
 import { initUsersController } from './src/user/routes/usersController';
-import { listenMessages } from './src/message/websocket/messageSocket';
 import { initMessagesController } from './src/message/routes/messagesController';
+import { initConnections } from './src/connection/connectionSocket';
 
 class MessageServer {
   
@@ -37,7 +37,6 @@ class MessageServer {
   }
 
   private startServer(): void {
-
     mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true }).then(() => {
       console.log('Connected to database!');
     }).catch((error: any) => {
@@ -48,15 +47,7 @@ class MessageServer {
       console.log(`The server is running in ${this.address}:${this.port}`);
     });
 
-    this.io.on('connect', (socket) => {
-      console.log(`Client connected: ${socket.id}`);
-
-      listenMessages(this.io, socket);
-
-      socket.on('disconnect', () => {
-        console.log(`Client disconnected: ${socket.id}`);
-      });
-    });
+    initConnections(this.io);
 
     this.server.on('close', () => {
       mongoose.connection.close();

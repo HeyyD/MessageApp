@@ -2,9 +2,9 @@ import { YellowBox } from "react-native";
 import SocketIOClient from 'socket.io-client';
 
 import * as variables from '../../variables.json';
+import UserService from "./UserService";
 
 export default class Websocket {
-
   static get instance(): Websocket {
     if (!Websocket._instance) {
       Websocket._instance = new Websocket();
@@ -17,7 +17,9 @@ export default class Websocket {
   }
 
   private static _instance: Websocket;
+
   private _socket: SocketIOClient.Socket;
+  private userService = UserService.instance;
 
   private constructor() {
     // tslint:disable-next-line: no-console
@@ -28,6 +30,6 @@ export default class Websocket {
       + ' you mean to put these under `headers`?',
     ]);
 
-    this._socket = SocketIOClient(`ws://${variables.server}`);
+    this._socket = SocketIOClient(`ws://${variables.server}`, {query: `user=${this.userService.user.deviceID}`});
   }
 }
