@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { FlatList, ToastAndroid } from 'react-native';
-import { Subscription, zip, combineLatest, concat } from 'rxjs';
+import { FlatList, ToastAndroid, ActivityIndicator } from 'react-native';
+import { Subscription } from 'rxjs';
 
 import { Message } from '../models/Message';
 import MessageService from '../services/MessageService';
@@ -14,6 +14,7 @@ interface Props {
 }
 interface State {
   messages: Message[];
+  isLoading: boolean;
 }
 export default class Chat extends Component<Props, State> {
 
@@ -22,6 +23,7 @@ export default class Chat extends Component<Props, State> {
 
   private messagesSubscription?: Subscription;
   private messageSubscription?: Subscription;
+  private loadingSubscription?: Subscription;
 
   constructor(props: Props) {
     super(props);
@@ -30,6 +32,7 @@ export default class Chat extends Component<Props, State> {
 
     this.state = {
       messages: [],
+      isLoading: true,
     };
   }
 
@@ -53,7 +56,9 @@ export default class Chat extends Component<Props, State> {
         );
       }
     });
-
+    this.loadingSubscription = this.messageService.isLoading.subscribe((isLoading) => {
+      this.setState({isLoading});
+    });
     this.messageService.getMessages(this.userService.user.deviceID, this.props.receiver.deviceID);
   }
 
@@ -65,16 +70,24 @@ export default class Chat extends Component<Props, State> {
     if (this.messageSubscription) {
       this.messageSubscription.unsubscribe();
     }
+
+    if (this.loadingSubscription) {
+      this.loadingSubscription.unsubscribe();
+    }
   }
 
   render(): JSX.Element {
-    return (
-      <FlatList
-        inverted={ true }
-        data={ this.state.messages.reverse() }
-        keyExtractor={ (item: Message, index: number) => index.toString() }
-        renderItem={ ({item}) => <ChatMessage message={ item } />}
-      />
-    );
+    if (this.state.isLoading) {
+      return <ActivityIndicator size='large' color='#eb6123' />;
+    } else {
+      return (
+        <FlatList
+          inverted={ true }
+          data={ this.state.messages.reverse() }
+          keyExtractor={ (item: Message, index: number) => index.toString() }
+          renderItem={ ({item}) => <ChatMessage message={ item } />}
+        />
+      );
+    }
   }
 }

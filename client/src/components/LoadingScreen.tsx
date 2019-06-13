@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Text, View, ActivityIndicator, StyleSheet } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import DeviceInfo from 'react-native-device-info';
-import MessageService from '../services/MessageService';
 import { User } from '../models/User';
 
 import * as variables from '../../variables.json';

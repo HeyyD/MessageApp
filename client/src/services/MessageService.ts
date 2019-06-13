@@ -32,6 +32,10 @@ export default class MessageService {
     this._currentChat = chat;
   }
 
+  public get isLoading(): Observable<boolean> {
+    return this._isLoading;
+  }
+
   private _messages: Observable<Message[]> = new Observable<Message[]>();
   private _message: Observable<Message> = new Observable<Message>();
 
@@ -42,9 +46,14 @@ export default class MessageService {
 
   private _currentChat: string = '';
 
+  private _isLoading = new Observable<boolean>();
+  private isLoadingSubject = new BehaviorSubject(false);
+
   private constructor() {
     this._messages = this.messagesSubject.asObservable();
     this._message = this.messageSubject.asObservable();
+
+    this._isLoading = this.isLoadingSubject.asObservable();
 
     this.updateMessages();
 
@@ -58,9 +67,13 @@ export default class MessageService {
   }
 
   getMessages(senderId: string, receiverId: string): void {
+    this.isLoadingSubject.next(true);
     fetch(`${this.api}/${senderId}/${receiverId}`)
     .then((res) => res.json())
-    .then((res) => this.messagesSubject.next(res));
+    .then((res) => {
+      this.messagesSubject.next(res);
+      this.isLoadingSubject.next(false);
+    });
   }
 
   private updateMessages(): void {
